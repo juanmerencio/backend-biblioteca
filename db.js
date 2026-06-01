@@ -8,14 +8,14 @@ const { MySQLHOST, MySQLPORT, MySQLUSER, MySQLPASSWORD, MySQLDATABASE } = proces
 
 const pool = mysql.createPool({
   host: MySQLHOST,
-  port: MySQLPORT || 3306, // Porta padrão do MySQL é 3306 se não for especificada no .env
+  port: MySQLPORT || 3306, 
   user: MySQLUSER,
   password: MySQLPASSWORD,
   database: MySQLDATABASE,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  ssl: false // Caso precise de SSL no futuro, mude para { rejectUnauthorized: false }
+  ssl: false 
 });
 
 

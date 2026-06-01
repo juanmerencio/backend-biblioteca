@@ -3,48 +3,47 @@ import { sql } from "./db.js";
 
 export class DatabaseMYSQL {
 
-// Listagem de vídeos, com opção de busca por título usando o operador LIKE
+
     async list(search) {
-        let videos;
+        let Livros;
 
         if (search) {
-            // No mysql2, usamos o caractere "?" como placeholder para evitar SQL Injection
-            // O resultado vem como [videos, fields], por isso usamos a desestruturação [videos]
-            [videos] = await sql.execute(
-                'SELECT * FROM videos WHERE title LIKE ?', 
+            
+            [Livros] = await sql.execute(
+                'SELECT * FROM fitas WHERE title LIKE ?', 
                 [`%${search}%`]
             );
         } else {
-            [videos] = await sql.execute('SELECT * FROM videos');
+            [Livros] = await sql.execute('SELECT * FROM livros');
         }
 
-        return videos;
+        return Livros;
     }
 
-// Criação de um novo vídeo, gerando um ID único usando randomUUID
-    async create(video) {
-        const videoId = randomUUID();
-        const { title, description, duration } = video;
 
-        // No mysql2, passamos os valores em um array como segundo argumento
+    async create(Fitas) {
+        const fitaId = randomUUID();
+        const { title, sinopse, numero_de_paginas } = Livros;
+
+        
         await sql.execute(
-            'INSERT INTO videos (id, title, description, duration) VALUES (?, ?, ?, ?)',
-            [videoId, title, description, duration]
+            'INSERT INTO fitas (id, title, sinopse, numero_de_paginas) VALUES (?, ?, ?, ?)',
+            [livroId, title, sinopse, numero_de_paginas]
         );
     }
 
-// Atualização de um vídeo específico usando o ID
-    async update(id, video) {
-        const { title, description, duration } = video;
+
+    async update(id, Fitas) {
+        const { title, sinopse, numero_de_paginas } = Livros;
         await sql.execute(
-            'UPDATE videos SET title = ?, description = ?, duration = ? WHERE id = ?',
-            [title, description, duration, id]
+            'UPDATE livros SET title = ?, sinopse = ?, numero_de_paginas = ? WHERE id = ?',
+            [title, sinopse, numero_de_paginas, id]
         );
     }
 
-// Exclusão de um vídeo específico usando o ID
+
     async delete(id) {
-        await sql.execute('DELETE FROM videos WHERE id = ?', [id]);
+        await sql.execute('DELETE FROM livros WHERE id = ?', [id]);
     }
 }
 

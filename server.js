@@ -8,60 +8,48 @@ console.log('Variáveis de ambiente carregadas:', { PORT });
 const server = fastify();
 
 server.get('/', async (request, reply) => {
-  return { message: 'API server - Gestor de Vídeos' };
+  return { message: 'API server - Bibliotca' };
 });
 
-
-
-// Criando uma instância da classe DatabaseMYSQL para 
-// interagir com o banco de dados
 const database = new DatabaseMYSQL();
 
 
-// Rota para criar um novo vídeo, recebendo os dados no corpo 
-// da requisição e usando o método create do database
-server.post("/videos", async (request, reply) => {
-    const { title, description, duration } = request.body;
+
+server.post("/livros", async (request, reply) => {
+    const { title, sinopse, numero_de_paginas } = request.body;
     await database.create({
         title,
-        description,
-        duration
+        sinopse,
+        numero_de_paginas
     });
     console.log(await database.list());
     return reply.status(201).send();
 })
 
-// Rota para listar os vídeos, com opção de busca por título 
-// usando query string e o método list do database
-server.get("/videos", async (request) => {
+server.get("/livros", async (request) => {
     const search = request.query.search;
     console.log(search);
-    const videos = await database.list(search);
-    return videos
+    const fitas = await database.list(search);
+    return livros
 })
 
-// Rota para atualizar um vídeo específico, recebendo o 
-// ID na URL e os dados no corpo da requisição, usando o 
-// método update do database
-server.put("/videos/:id", async (request,reply) => {
+server.put("/livros/:id", async (request,reply) => {
 
-    const videoId = request.params.id;
-    const { title, description, duration } = request.body;
+    const livrosId = request.params.id;
+    const { title, sinopse, numero_de_paginas } = request.body;
 
-    const video = await database.update(videoId, {
+    const video = await database.update(livrosId, {
         title,
-        description,
-        duration,
+        sinopse,
+        numero_de_paginas,
     });
 
     return reply.status(204).send();
 })
 
-// Rota para excluir um vídeo específico, recebendo o ID na 
-// URL e usando o método delete do database
-server.delete("/videos/:id", async (request, reply) => {
+server.delete("/livros/:id", async (request, reply) => {
     const videoId = request.params.id;
-    await database.delete(videoId);
+    await database.delete(livrosId);
     return reply.status(204).send();
 })
 
@@ -72,9 +60,3 @@ server.listen({port:PORT}, (err, address) => {
     }
     console.log(`Servidor rodando em ${address}`);
 });
-
-
-
-
-
-

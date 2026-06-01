@@ -1,29 +1,28 @@
-POST http://localhost:3333/videos
+POST http://localhost:3333
 Content-Type: application/json
 
 {
-    "title": "Video teste",
-    "description": "Este é o primeiro video de Node.js com MySQL",
-    "duration": 900
+    "title": "livro teste",
+    "sinopse": "Este é o primeiro livro de Node.js com MySQL",
+    "numero_de_paginas": 900
 }
-###
 
-GET http://localhost:3333/videos
-# GET http://localhost:3333/videos
 
-###
+GET http://localhost:3333
 
-PUT http://localhost:3333/videos/b9bfb29f-7981-474c-b989-a293c0c341a5
+
+
+PUT http://localhost:3333/b9bfb29f-7981-474c-b989-a293c0c341a5
 Content-Type: application/json
 
 {
-    "title": "Auterei este video",
-    "description": "descrição atualizada",
-    "duration": 345
+    "title": "alterei este livro",
+    "sinopse": "sinopse atualizada",
+    "numero_de_paginas": 345
 }
 
-###
 
-DELETE  http://localhost:3333/videos/a94d0036-3ab2-4e15-ad00-5d3ff22783c4
+
+
 
 
